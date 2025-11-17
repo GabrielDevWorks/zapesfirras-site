@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Minha Conta - Zap Esfirras</title>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="stylesheet" href="static/css/perfil.css"> 
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="pagina-perfil">
+
+    <div id="tela-carregamento">
+        <img src="assets/zapesfiiras.png" alt="Logo Zap Esfirras" class="logo-pulso">
+    </div>
+
+    <div id="conteudo-principal" style="display: none;">
+        
+        <header>
+            <div class="barra-superior-info apenas-desktop">
+                <span id="greeting">Boa noite!</span> &#8226; <span id="current-date">Sexta-feira, 19 de Setembro</span>
+            </div>
+            <div class="barra-navegacao">
+                <div class="marca-navegacao">
+                    <a href="index.html">
+                        <img src="assets/zapesfiiras.png" alt="Zap Esfirras">
+                    </a>
+                </div>
+                <nav class="menu-navegacao apenas-desktop">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Opções</a></li>
+                        <li><a href="pedidos.html">Pedidos</a></li>
+                        <li><a href="promocoes.html">Promoções</a></li>
+                    </ul>
+                </nav>
+                <div class="acoes-navegacao apenas-desktop">
+                    <div class="caixa-pesquisa">
+                        <input type="text" class="texto-pesquisa" placeholder="Buscar...">
+                        <a href="#" class="botao-pesquisa"><ion-icon name="search-outline"></ion-icon></a>
+                    </div>
+                    <button class="botao-carrinho-desktop" id="botao-carrinho-desktop">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span class="contador-carrinho" id="contador-carrinho-desktop">0</span>
+                    </button>
+                    <a href="login-cliente.html" class="botao-conta" id="botao-conta-desktop">CONTA</a>
+                    <div class="info-usuario-logado" id="info-usuario-desktop" style="display: none;">
+                        <a href="perfil.html" class="link-perfil-desktop">
+                            <span id="nome-usuario-desktop"></span>
+                        </a>
+                        <button id="botao-logout-desktop" class="botao-logout" title="Sair">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container-principal">
+            <div class="perfil-layout">
+                <aside class="perfil-nav">
+                    <div class="perfil-nav-toggle-mobile">
+                        <select id="perfil-nav-select-mobile">
+                            <option value="meus-dados" selected>Meus Dados</option>
+                            <option value="zappontos">ZapPontos</option>
+                            <option value="zapclube">ZapClube</option>
+                            <option value="historico-pedidos">Histórico de Pedidos</option>
+                            <option value="logout">Sair</option>
+                        </select>
+                    </div>
+                    <div class="perfil-nav-links">
+                        <a href="#meus-dados" class="perfil-nav-link active" data-target="meus-dados"><ion-icon name="person-circle-outline"></ion-icon> <span>Meus Dados</span></a>
+                        <a href="#zappontos" class="perfil-nav-link" data-target="zappontos"><ion-icon name="ribbon-outline"></ion-icon> <span>ZapPontos</span></a>
+                        <a href="#zapclube" class="perfil-nav-link" data-target="zapclube"><ion-icon name="star-outline"></ion-icon> <span>ZapClube</span></a>
+                        <a href="#historico-pedidos" class="perfil-nav-link" data-target="historico-pedidos"><ion-icon name="receipt-outline"></ion-icon> <span>Histórico de Pedidos</span></a>
+                        <a href="#" id="link-logout" class="perfil-nav-link"><ion-icon name="log-out-outline"></ion-icon> <span>Sair</span></a>
+                    </div>
+                </aside>
+
+                           <section class="perfil-conteudo">
+                    
+                    <div id="secao-meus-dados" class="perfil-secao active">
+                        <div class="profile-card-interno">
+                            <h2>Meus Dados</h2>
+                            <p>Mantenha suas informações sempre atualizadas.</p>
+                            <form id="profile-form">
+                                <div class="form-grid">
+                                    <div class="form-campo"><label for="profile-name">Nome Completo</label><input type="text" id="profile-name" readonly required></div>
+                                    <div class="form-campo"><label for="profile-phone">Telefone</label><input type="tel" id="profile-phone" readonly required></div>
+                                    <div class="form-campo full-width"><label for="profile-email">E-mail</label><input type="email" id="profile-email" readonly required></div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" id="edit-button" class="btn">Editar Dados</button>
+                                    <button type="submit" id="save-button" class="btn btn-primary" style="display: none;">Salvar Alterações</button>
+                                    <button type="button" id="cancel-button" class="btn btn-secondary" style="display: none;">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="profile-card-interno">
+                            <h2>Alterar Senha</h2>
+                            <form id="password-form">
+                                <div class="form-grid">
+                                    <div class="form-campo"><label for="current-password">Senha Atual</label><input type="password" id="current-password" required></div>
+                                    <div class="form-campo"><label for="new-password">Nova Senha</label><input type="password" id="new-password" required></div>
+                                    <div class="form-campo"><label for="confirm-password">Confirmar Nova Senha</label><input type="password" id="confirm-password" required></div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="profile-card-interno">
+                            <h3>Notificações</h3>
+                            <p>Receba atualizações sobre o status dos seus pedidos diretamente no seu dispositivo.</p>
+                            <button class="btn btn-primary" id="enable-notifications-btn">Ativar Notificações</button>
+                            <p id="notification-status" style="margin-top: 10px; font-size: 0.9em;"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="secao-zappontos" class="perfil-secao"></div>
+                    <div id="secao-zapclube" class="perfil-secao"></div>
+                    <div id="secao-historico-pedidos" class="perfil-secao">
+                    
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <div id="address-modal-overlay" class="modal-sobreposicao">
+        <div class="modal-produto" style="max-width: 500px;">
+            <button class="botao-fechar" id="close-address-modal">&times;</button>
+            <h2>Novo Endereço</h2>
+            <form id="address-form" class="novo-form-vertical">
+                 <div class="form-campo"><label for="address-alias">Apelido (Ex: Casa, Trabalho)</label><input type="text" id="address-alias" required></div>
+                 <div class="form-campo"><label for="address-cep">CEP</label><input type="tel" id="address-cep" required></div>
+                 <div class="form-campo"><label for="address-street">Rua</label><input type="text" id="address-street" required readonly></div>
+                 <div class="form-campo"><label for="address-number">Número</label><input type="text" id="address-number" required></div>
+                 <div class="form-campo"><label for="address-neighborhood">Bairro</label><input type="text" id="address-neighborhood" required readonly></div>
+                 <div class="form-campo"><label for="address-complement">Complemento</label><input type="text" id="address-complement"></div>
+                 <div class="form-campo"><label for="address-reference">Referência</label><input type="text" id="address-reference"></div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-address-modal" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Endereço</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="history-modal-overlay" class="modal-sobreposicao">
+        <div class="modal-produto" style="max-width: 550px;">
+            <button class="botao-fechar" id="close-history-modal">&times;</button>
+            <div id="history-modal-content">
+                </div>
+        </div>
+    </div>
+
+    <div id="cancel-confirm-modal" class="modal-sobreposicao">
+        <div class="modal-produto" style="max-width: 450px;">
+            <div class="confirm-modal-content">
+                <ion-icon name="warning-outline"></ion-icon>
+                <h3>Confirmar Cancelamento</h3>
+                <p>Você tem certeza que deseja cancelar sua assinatura do ZapClube? Esta ação não pode ser desfeita.</p>
+                <div class="form-actions">
+                    <button id="keep-subscription-btn" class="btn btn-secondary">Manter Assinatura</button>
+                    <button id="confirm-cancel-btn" class="btn btn-danger">Sim, Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="redeem-confirm-modal" class="modal-sobreposicao">
+        <div class="modal-produto" style="max-width: 450px;">
+            <div class="confirm-modal-content">
+                <ion-icon name="gift-outline"></ion-icon>
+                <h3>Resgatar Recompensa</h3>
+                <p>Seus pontos serão deduzidos e o item será adicionado à sua sacola. Deseja continuar?</p>
+                <div class="form-actions">
+                    <button id="cancel-redeem-btn" class="btn btn-secondary">Cancelar</button>
+                    <button id="confirm-redeem-btn" class="btn btn-primary">Sim, Resgatar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificacao" class="notificacao"><p id="texto-notificacao"></p></div>
+    
+ <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+
+    <a href="promocoes.html" class="bottom-nav-item">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span class="bottom-nav-text">Promoções</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>
+    
+    <script src="static/js/shared-ui.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="static/js/perfil.js"></script>
+</body>
+</html>

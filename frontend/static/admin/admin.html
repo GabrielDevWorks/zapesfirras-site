@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin - Zap Esfirras</title>
+    <link rel="stylesheet" href="/static/css/print.css" media="print">
+    <link rel="stylesheet" href="admin-style.css">
+
+    <link rel="icon" type="image/png" href="/assets/zapesfiiras.png">
+    <link rel="manifest" href="/admin-manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div id="audio-unlock-prompt" class="audio-prompt">
+        <ion-icon name="volume-mute-outline"></ion-icon>
+        <span>O som está desativado. Clique em qualquer lugar para ativar as notificações.</span>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="admin-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="/assets/zapesfiiras.png" alt="Zap Esfirras Logo" class="logo">
+                <h2>Painel Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-view="dashboard"><ion-icon name="grid-outline"></ion-icon> <span>Dashboard</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="pedidos"><ion-icon name="receipt-outline"></ion-icon> <span>Pedidos</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="cardapio"><ion-icon name="fast-food-outline"></ion-icon> <span>Cardápio</span></a></li>
+                    
+                                        <li><a href="#" class="nav-link" data-view="recompensas"><ion-icon name="trophy-outline"></ion-icon> <span>Recompensas</span></a></li>
+                                        <li><a href="#" class="nav-link" data-view="assinantes"><ion-icon name="star-outline"></ion-icon><span>Assinantes</span></a></li>
+                                        <li><a href="#" class="nav-link" data-view="clientes"><ion-icon name="people-outline"></ion-icon> <span>Clientes</span></a></li>
+                                        <li><a href="#" class="nav-link" data-view="avaliacoes"><ion-icon name="star-half-outline"></ion-icon> <span>Avaliações</span></a></li>
+
+                    <li><a href="#" class="nav-link" data-view="relatorios"><ion-icon name="analytics-outline"></ion-icon> <span>Relatórios</span></a></li>
+                    <li><a href="#" class="nav-link" data-view="configuracoes"><ion-icon name="settings-outline"></ion-icon> <span>Configurações</span></a></li>
+                </ul>
+            </nav>
+                <div class="sidebar-footer">
+            <div id="store-status-indicator">
+                <div class="status-light"></div>
+                <div class="status-text">
+                    <strong>Status da Loja</strong>
+                    <span id="status-label">Carregando...</span>
+                </div>
+            </div>
+            <button class="btn" id="manual-toggle-button">Carregando...</button>
+        </div>
+    </aside>
+
+        <main class="main-content">
+<header class="admin-header">
+                <button class="menu-toggle" id="menu-toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </button>
+                <h1 id="page-title">Dashboard</h1>
+                <div class="admin-profile">
+            
+            <button class="btn btn-primary" id="btn-fechar-caixa-header">
+              <ion-icon name="archive-outline"></ion-icon>
+              <span>Fechar Caixa</span>
+            </button>
+                <span id="admin-user-name"></span>
+    <ion-icon name="person-circle-outline"></ion-icon>
+
+    <button class="btn-logout-header" id="logout-button" title="Sair">
+        <ion-icon name="log-out-outline"></ion-icon>
+    </button>
+</div>
+            </header>
+
+
+            <section class="admin-view active" id="view-dashboard"></section>
+            <section class="admin-view" id="view-pedidos"></section>
+            <section class="admin-view" id="view-cardapio"></section>
+            <section class="admin-view" id="view-recompensas"></section>
+
+            <section class="admin-view" id="view-assinantes"></section>
+            <section class="admin-view" id="view-clientes"></section>
+            <section class="admin-view" id="view-avaliacoes"></section>
+
+            
+
+            <section class="admin-view" id="view-relatorios"></section>
+            <section class="admin-view" id="view-configuracoes"></section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="product-modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title">Adicionar Novo Produto</h2>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-group"><label for="product-name">Nome do Produto</label><input type="text" id="product-name" required></div>
+                <div class="form-group"><label for="product-category">Categoria</label><select id="product-category" required></select></div>
+                <div class="form-group"><label for="product-price">Preço (R$)</label><input type="number" id="product-price" step="0.01" placeholder="Ex: 5.50" required></div>
+                <div class="form-group"><label for="product-description">Descrição</label><textarea id="product-description" rows="3" placeholder="Ex: Deliciosa esfirra de carne..."></textarea></div>
+                
+                <div class="form-group">
+                    <label>Adicionais do Produto</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="adicionais-option" value="default" checked> Manter Padrões da Categoria</label>
+                        <label><input type="radio" name="adicionais-option" value="custom"> Personalizar Adicionais</label>
+                    </div>
+                </div>
+                <div id="custom-additions-container" class="custom-additions-container" style="display: none;">
+                    <div id="custom-additions-list">
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-add-more" id="add-new-addition-btn"><ion-icon name="add-outline"></ion-icon> Adicionar Novo Adicional</button>
+                </div>
+
+                <div class="form-group"><label>Imagem do Produto</label><div class="image-upload-container"><div class="image-preview-wrapper"><img id="image-preview" src="https://via.placeholder.com/150x150.png?text=Sem+Imagem" alt="Pré-visualização"></div><div class="image-upload-options"><p>Escolha uma imagem:</p><input type="file" id="product-image-file" accept="image/*" style="display: none;"><button type="button" class="btn btn-secondary" id="upload-image-button"><ion-icon name="cloud-upload-outline"></ion-icon> Enviar do Computador</button><p class="separator">ou</p><input type="text" id="product-image-url" placeholder="Cole a URL de uma imagem aqui"></div></div></div>
+                
+                <div class="form-actions"><button type="button" class="btn btn-secondary" id="cancel-modal-button">Cancelar</button><button type="submit" class="btn btn-primary">Salvar</button></div>
+            </form>
+            <button class="close-modal-button" id="close-modal-button"><ion-icon name="close-outline"></ion-icon></button>
+        </div>
+    </div>
+
+<div class="modal-overlay" id="simple-promo-modal-overlay">
+    <div class="modal-content">
+        <h2 id="simple-promo-title">Definir Promoção</h2>
+        <form id="simple-promo-form">
+            <input type="hidden" id="simple-promo-product-id">
+            <div class="form-group">
+                <label for="simple-promo-price">Preço Promocional (R$)</label>
+                <input type="number" id="simple-promo-price" step="0.01" placeholder="Deixe em branco para remover">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-danger" id="btn-remove-promo">Remover Promoção</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-simple-promo">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+    
+    <div class="modal-overlay" id="confirm-modal-overlay">
+        <div class="modal-content">
+            <h2 id="confirm-modal-title">Confirmar Exclusão</h2>
+            <p id="confirm-modal-text">Você tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+            <div class="form-actions"><button type="button" class="btn btn-secondary" id="cancel-confirm-button">Cancelar</button><button type="button" class="btn btn-danger" id="confirm-delete-button">Excluir</button></div>
+        </div>
+    </div>
+<div class="modal-overlay" id="fechar-caixa-confirm-modal">
+        <div class="modal-content">
+            <ion-icon name="warning-outline"></ion-icon>
+            <h2 id="confirm-modal-title">Confirmar Fechamento de Caixa</h2>
+<p id="confirm-modal-text">Atenção! Você deseja confirmar o fechamento de caixa? Esta ação irá **imprimir o relatório final**, **fechar a loja** para novos pedidos e **limpar o painel** movendo pedidos em aberto para "Cancelado". O dashboard e o contador (Z01) zerarão automaticamente no próximo pedido.</p>            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="btn-cancelar-fechamento">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn-confirmar-fechamento">Sim, Imprimir e Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification-area" class="notification-area"></div>
+    <audio id="notification-sound" src="/assets/notification.mp3" preload="auto"></audio>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="admin-script.js?v=1.0.0"></script>
+</body>
+</html>

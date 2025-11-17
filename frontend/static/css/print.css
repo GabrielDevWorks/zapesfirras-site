@@ -1,0 +1,51 @@
+
+
+@page {
+  size: 80mm auto;
+  margin: 0mm;    
+}
+
+body {
+  margin: 5mm;
+}
+
+@media print {
+
+ 
+  body * {
+    visibility: hidden;
+  }
+
+ 
+  #cupom-para-imprimir, #cupom-para-imprimir * {
+    visibility: visible;
+  }
+
+ 
+  #cupom-para-imprimir {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+ 
+  * {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+ 
+  body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10pt;
+  }
+
+ 
+  button, input, select, textarea {
+    display: none !important;
+  }
+}

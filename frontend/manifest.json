@@ -1,0 +1,21 @@
+{
+    "name": "Zap Esfirras",
+    "short_name": "Zap Esfirras",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#D32F2F",
+    "description": "O melhor delivery de esfirras da região.",
+    "icons": [
+        {
+            "src": "assets/zapesfiiras.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/zapesfiiras_512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

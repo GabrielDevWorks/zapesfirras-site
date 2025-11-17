@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Promoções - Zap Esfirras</title>
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div id="tela-carregamento">
+        <img src="assets/zapesfiiras.png" alt="Logo Zap Esfirras" class="logo-pulso">
+    </div>
+
+    <div id="conteudo-principal" style="display: none;">
+        
+  <header>
+    <div class="barra-superior-info apenas-desktop">
+        <span id="greeting">Boa noite!</span> &#8226; <span id="current-date">Sexta-feira, 19 de Setembro</span>
+    </div>
+    <div class="barra-navegacao">
+        <div class="marca-navegacao">
+            <a href="index.html">
+                <img src="assets/zapesfiiras.png" alt="Zap Esfirras">
+            </a>
+        </div>
+        <nav class="menu-navegacao apenas-desktop">
+            <ul class="nav-links">
+                <li><a href="index.html">Opções</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li><a href="promocoes.html" class="ativo">Promoções</a></li>
+            </ul>
+        </nav>
+        <div class="acoes-navegacao apenas-desktop">
+            <div class="caixa-pesquisa">
+                <input type="text" class="texto-pesquisa" placeholder="Buscar...">
+                <a href="#" class="botao-pesquisa"><ion-icon name="search-outline"></ion-icon></a>
+            </div>
+            <button class="botao-carrinho-desktop" id="botao-carrinho-desktop">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span class="contador-carrinho" id="contador-carrinho-desktop">0</span>
+            </button>
+            <a href="login-cliente.html" class="botao-conta" id="botao-conta-desktop">CONTA</a>
+            <div class="info-usuario-logado" id="info-usuario-desktop" style="display: none;">
+                <a href="perfil.html" class="link-perfil-desktop">
+                    <span id="nome-usuario-desktop"></span>
+                </a>
+                <button id="botao-logout-desktop" class="botao-logout" title="Sair">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <main class="container-principal">
+            <section class="container-secao">
+                <h2 class="titulo-secao">Nossas Ofertas Especiais</h2>
+                <p style="margin-top: -15px; margin-bottom: 30px; color: var(--grey-dark);">Aproveite nossos combos e promoções exclusivas!</p>
+                
+                <div class="grade-produtos" id="grade-promocoes">
+                    <p>Carregando promoções...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-sobreposicao" class="modal-sobreposicao">
+        <div class="modal-produto">
+            <button class="botao-fechar" id="botao-fechar-modal">&times;</button>
+            <div class="conteudo-modal">
+                <div class="detalhes-modal">
+                    <h2 id="nome-produto-modal">Nome do Combo</h2>
+                    <h3 id="desc-produto-modal">Descrição detalhada do que vem no combo.</h3>
+                    <div class="area-observacao">
+                        <h3>Alguma observação?</h3>
+                        <textarea id="observacao-produto" placeholder="Ex: sem cebola, maionese à parte..."></textarea>
+                    </div>
+                    <div class="opcoes-modal">
+                        <div class="seletor-quantidade">
+                            <button class="botao-quantidade botao-menos">-</button>
+                            <input type="text" class="entrada-quantidade" value="1" readonly>
+                            <button class="botao-quantidade botao-mais">+</button>
+                        </div>
+                        <button class="botao-adicionar-carrinho-modal">Adicionar R$ 0,00</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificacao" class="notificacao">
+        <p id="texto-notificacao"></p>
+    </div>
+
+ <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+
+    <a href="promocoes.html" class="bottom-nav-item">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span class="bottom-nav-text">Promoções</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>
+    
+    <script src="static/js/shared-ui.js"></script>
+    <script src="static/js/promocoes.js"></script>
+</body>
+</html>

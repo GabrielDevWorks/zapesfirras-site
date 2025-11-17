@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/", "dest": "frontend/static/admin/admin.html" },
+    { "src": "/(.*)", "dest": "frontend/static/admin/$1" }
+  ]
+}

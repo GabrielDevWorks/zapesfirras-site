@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Recuperar Senha - Zap Esfirras</title>
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="stylesheet" href="static/css/auth-cliente.css?v=1.0.0">
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        <div class="auth-form-card">
+            <a href="index.html"><img src="assets/zapesfiiras.png" alt="Zap Esfirras Logo" class="auth-logo"></a>
+            <h2>Recuperar Senha</h2>
+            <p class="auth-subtitle">Digite seu e-mail e enviaremos um link para você criar uma nova senha.</p>
+            
+            <form id="forgot-password-form">
+                <div class="form-grupo">
+                    <input type="email" id="email" placeholder=" " required>
+                    <label for="email">Seu e-mail de cadastro</label>
+                </div>
+                
+                <p id="message" style="min-height: 20px; margin-bottom: 15px; font-weight: 500; color: var(--success-color);"></p>
+                
+                <button type="submit" class="btn-auth">Enviar Link de Recuperação</button>
+            </form>
+
+            <p class="auth-switch-link">
+                Lembrou a senha? <a href="login-cliente.html">Faça login</a>
+            </p>
+        </div>
+    </div>
+    
+<nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+
+    <a href="promocoes.html" class="bottom-nav-item">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span class="bottom-nav-text">Promoções</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>
+    <script src="static/js/shared-ui.js?v=1.0.0"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crie uma Nova Senha - Zap Esfirras</title>
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="stylesheet" href="static/css/auth-cliente.css">
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        <div class="auth-form-card">
+            <a href="index.html"><img src="assets/zapesfiiras.png" alt="Zap Esfirras Logo" class="auth-logo"></a>
+            <h2>Crie uma Nova Senha</h2>
+            <p class="auth-subtitle">Sua nova senha deve ser diferente da anterior.</p>
+            
+            <form id="reset-password-form">
+                <div class="form-grupo">
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder=" " required>
+                        <label for="password">Nova senha</label>
+                        <ion-icon name="eye-outline" class="password-toggle-icon"></ion-icon>
+                    </div>
+                </div>
+                <div class="form-grupo">
+                     <div class="input-wrapper">
+                        <input type="password" id="password-confirm" placeholder=" " required>
+                        <label for="password-confirm">Confirme a nova senha</label>
+                        <ion-icon name="eye-outline" class="password-toggle-icon"></ion-icon>
+                    </div>
+                </div>
+                
+                <p id="error-message" class="error-message"></p>
+                
+                <button type="submit" class="btn-auth">Salvar Nova Senha</button>
+            </form>
+        </div>
+    </div>
+    
+ <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>      
+
+<script src="static/js/shared-ui.js"></script>
+
+
+    <script src="static/js/auth-cliente.js"></script>
+
+</body>
+</html>

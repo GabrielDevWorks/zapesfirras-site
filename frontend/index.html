@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zap Esfirras</title>
+    <meta name="google-site-verification" content="-7c6DsksyeAGeXhRbjvFFryf1pAmvsmpBUuHkA-glS0" />
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <meta property="og:title" content="Zap Esfirras - O melhor delivery da região!" />
+    <meta property="og:description" content="A melhor esfirra da região, feita com ingredientes frescos e muito carinho. Peça agora e se surpreenda!" />
+    <meta property="og:url" content="https://www.seusite.com.br" /> 
+    <meta property="og:image" content="https://www.seusite.com.br/assets/zapesfiiras_social.png" />
+    <meta property="og:type" content="website" />
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+<div id="tela-carregamento">
+    <div class="spinner-moderno"></div>
+    <div class="texto-carregando">
+        <span>C</span><span>a</span><span>r</span><span>r</span><span>e</span><span>g</span><span>a</span><span>n</span><span>d</span><span>o</span><span>.</span><span>.</span><span>.</span>
+    </div>
+</div>
+
+<a href="perfil.html#zapclube" class="zapclube-banner" id="zapclube-cta-banner" style="display: none;">
+    <div class="zapclube-banner-icon">
+        <ion-icon name="sparkles-outline"></ion-icon>
+    </div>
+    <div class="zapclube-banner-text">
+        <strong>Conheça o ZapClube!</strong>
+        <span>Descontos e mimos exclusivos.</span>
+    </div>
+    <div class="zapclube-banner-arrow">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+    </div>
+    <button class="zapclube-banner-close" id="zapclube-banner-close-btn" aria-label="Fechar">
+        <ion-icon name="close-outline"></ion-icon>
+    </button>
+</a>
+
+ <header>
+    <div class="barra-superior-info apenas-desktop">
+        <span id="greeting">Boa noite!</span> &#8226; <span id="current-date">Quarta-feira, 10 de Setembro</span>
+    </div>
+    <div class="barra-navegacao">
+        <div class="marca-navegacao">
+            <a href="index.html">
+                <img src="assets/zapesfiiras.png" alt="Zap Esfirras">
+            </a>
+        </div>
+        <nav class="menu-navegacao apenas-desktop">
+            <ul class="nav-links">
+                <li><a href="index.html">Opções</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li><a href="promocoes.html">Promoções</a></li>
+            </ul>
+        </nav>
+        <div class="acoes-navegacao apenas-desktop">
+            
+            <div class="caixa-pesquisa">
+                <input type="text" class="texto-pesquisa" placeholder="Buscar...">
+                <a href="#" class="botao-pesquisa"><ion-icon name="search-outline"></ion-icon></a>
+            </div>
+            <button class="botao-carrinho-desktop" id="botao-carrinho-desktop">
+                <ion-icon name="cart-outline"></ion-icon>
+                <span class="contador-carrinho" id="contador-carrinho-desktop">0</span>
+            </button>
+            <a href="login-cliente.html" class="botao-conta" id="botao-conta-desktop">CONTA</a>
+            <div class="info-usuario-logado" id="info-usuario-desktop" style="display: none;">
+                <a href="perfil.html" class="link-perfil-desktop">
+                    <span id="nome-usuario-desktop"></span>
+                </a>
+                <button id="botao-logout-desktop" class="botao-logout" title="Sair">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <div id="conteudo-principal" style="display: none;">
+        <main class="container-principal" id="main-container">
+            
+            <section class="container-pesquisa-mobile apenas-mobile">
+                <div class="caixa-pesquisa">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" class="texto-pesquisa" placeholder="O que deseja?">
+                </div>
+            </section>
+
+            <section class="container-secao">
+                <div class="container-filtros-scroll">
+                    <button class="botao-scroll" id="scroll-left"><ion-icon name="chevron-back-outline"></ion-icon></button>
+                    <div class="barra-filtros">
+                    </div>
+                    <button class="botao-scroll" id="scroll-right"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </div>
+            </section>
+
+            <section id="secao-promocoes-relampago" class="container-secao" style="display: none;">
+                <h2 class="titulo-secao-imperdivel">
+                    <ion-icon name="flash-outline"></ion-icon> IMPERDÍVEL
+                </h2>
+                <div class="grade-produtos" id="grade-promocoes">
+                </div>
+            </section>
+
+            <div id="sem-resultados" style="display: none; text-align: center; margin-top: 50px;">
+                <p>Poxa, não encontramos esse produto.</p>
+            </div>
+
+            <div id="notificacao" class="notificacao">
+                <p id="texto-notificacao"></p>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-sobreposicao" class="modal-sobreposicao">
+        <div class="modal-produto">
+            <button class="botao-fechar" id="botao-fechar-modal">&times;</button>
+            <div class="conteudo-modal">
+                <div class="container-imagem-modal">
+                </div>
+                <div class="detalhes-modal">
+                    <h2 id="nome-produto-modal">Nome do Produto</h2>
+                    <h3 id="desc-produto-modal">Breve descrição.</h3>
+                    <div class="area-observacao">
+                        <h3>Alguma observação?</h3>
+                        <textarea id="observacao-produto" placeholder="Ex: sem cebola, maionese à parte..."></textarea>
+                    </div>
+                    <div class="area-adicionais">
+                        <button type="button" class="botao-toggle-adicionais" id="toggle-adicionais">
+                            <span>Deseja algum adicional?</span>
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                        </button>
+                        <div class="lista-adicionais-container" id="lista-adicionais">
+                        </div>
+                    </div>
+                    <div id="modal-suggestions-container" class="modal-suggestions-container">
+                    </div>
+                    <div class="opcoes-modal">
+                        <div class="seletor-quantidade">
+                            <button class="botao-quantidade botao-menos">-</button>
+                            <input type="text" class="entrada-quantidade" value="1" readonly>
+                            <button class="botao-quantidade botao-mais">+</button>
+                        </div>
+                        <button class="botao-adicionar-carrinho-modal">Adicionar R$ 0,00</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="combo-modal-overlay">
+        <div class="modal-content-combo">
+            <button class="close-modal-button" id="close-combo-modal">&times;</button>
+            <h2 id="combo-modal-title">Monte seu Combo</h2>
+            
+            <div class="modal-combo-body">
+                <div class="selection-area" id="flavor-selection-area">
+                    <div class="selection-header">
+                        <h3>Escolha os sabores:</h3>
+                        <p class="selection-counter">
+                            <span id="combo-selected-count">0</span> / <span id="combo-limit">10</span>
+                        </p>
+                    </div>
+                    <div id="combo-flavor-list" class="flavor-list">
+                    </div>
+                </div>
+
+                <div class="selection-area" id="drink-selection-area">
+                    <div class="selection-header">
+                        <h3>Escolha sua bebida:</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-combo-footer">
+                <span id="combo-modal-price" class="total-price">R$ 0,00</span>
+                <button class="btn btn-primary" id="add-combo-to-cart-button">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="sobreposicao-carrinho" class="sobreposicao-carrinho"></div>
+
+<div id="painel-carrinho" class="painel-carrinho">
+    <header class="carrinho-cabecalho">
+        <button class="botao-voltar-carrinho" id="btn-voltar-carrinho">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <h3 id="titulo-carrinho">Meu Carrinho</h3>
+        <button class="botao-fechar-painel" id="botao-fechar-painel-novo">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+    </header>
+
+    <div class="carrinho-corpo">
+        <div id="tela-itens" class="tela-carrinho tela-ativa">
+            <div id="lista-itens-carrinho" class="lista-itens-carrinho">
+                <p class="mensagem-carrinho-vazio">Seu carrinho está vazio.</p>
+            </div>
+            <div class="entrega-gratis-tracker" id="entrega-gratis-tracker" style="display: none;">
+                <div class="tracker-icon"><ion-icon name="bicycle-outline"></ion-icon></div>
+                <div class="tracker-info">
+                    <p id="entrega-gratis-texto">Faltam R$ 60,00 para entrega grátis!</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="entrega-gratis-progress"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="entrega-gratis-success" id="entrega-gratis-success" style="display: none;">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <p>Parabéns! Você conseguiu entrega grátis!</p>
+            </div>
+            <a href="#" id="adicionar-mais-itens" class="adicionar-mais-itens">
+                <ion-icon name="add-circle-outline"></ion-icon>
+                <span>Adicionar mais itens</span>
+            </a>
+            <div class="secao-cupom">
+                <div class="input-cupom-container">
+                    <ion-icon name="ticket-outline"></ion-icon>
+                    <input type="text" placeholder="Cupom de desconto">
+                    <button>Aplicar</button>
+                </div>
+            </div>
+        </div>
+        <div id="tela-metodo-entrega" class="tela-carrinho">
+            <h4 class="form-titulo-secao">Como você quer receber seu pedido?</h4>
+            <section class="secao-opcoes-entrega">
+                <label class="opcao-entrega-card">
+                    <input type="radio" name="tipo-entrega" value="padrao" checked>
+                    <span class="radio-customizado"></span>
+                    <div class="opcao-entrega-info">
+                        <p>Receber em Casa (Entrega)</p>
+                        <span>Receba em 45-60 min</span>
+                    </div>
+                    <span class="opcao-entrega-preco">R$ 5,00</span>
+                </label>
+                <label class="opcao-entrega-card">
+                    <input type="radio" name="tipo-entrega" value="retirada">
+                    <span class="radio-customizado"></span>
+                    <div class="opcao-entrega-info">
+                        <p>Retirar na Loja</p>
+                        <span>Pronto em 25-35 min</span>
+                    </div>
+                    <span class="opcao-entrega-preco gratis">Grátis</span>
+                </label>
+            </section>
+        </div>
+        <div id="tela-dados-entrega" class="tela-carrinho">
+             <form id="form-endereco" class="novo-form-vertical">
+                <h4 class="form-titulo-secao">Quem está recebendo?</h4>
+                <div class="form-campo"><label for="cliente-nome">Seu nome*</label><input type="text" id="cliente-nome" placeholder="Digite seu nome completo" required></div>
+                <div class="form-campo"><label for="cliente-telefone">Seu telefone / WhatsApp*</label><input type="tel" id="cliente-telefone" placeholder="(99) 99999-9999" required></div>
+                <div class="form-campo"><label for="cliente-cpf">Seu CPF*</label><input type="tel" id="cliente-cpf" placeholder="Digite seu CPF" required></div>
+                <h4 class="form-titulo-secao">Onde entregar?</h4>
+                <div class="form-campo"><label for="endereco-cep">CEP*</label><input type="tel" id="endereco-cep" placeholder="Digite o CEP para buscar o endereço" required></div>
+                <div class="form-campo"><label for="endereco-rua">Rua / Avenida*</label><input type="text" id="endereco-rua" placeholder="Preenchido automaticamente" required readonly></div>
+                <div class="form-campo"><label for="endereco-bairro">Bairro*</label><input type="text" id="endereco-bairro" placeholder="Preenchido automaticamente" required readonly></div>
+                <div class="form-campo"><label for="endereco-numero">Número*</label><input type="text" id="endereco-numero" placeholder="Ex: 123" required></div>
+                <div class="form-campo"><label for="endereco-complemento">Complemento</label><input type="text" id="endereco-complemento" placeholder="Apto, Bloco, Casa dos fundos..."></div>
+                <div class="form-campo"><label for="endereco-referencia">Ponto de Referência</label><input type="text" id="endereco-referencia" placeholder="Ex: Próximo ao mercado"></div>
+            
+            </form>
+        </div>
+        <div id="tela-dados-retirada" class="tela-carrinho">
+            <form id="form-retirada" class="novo-form-vertical">
+                <h4 class="form-titulo-secao">Quem vai retirar?</h4>
+                <div class="form-campo"><label for="retirada-nome">Nome de quem vai retirar*</label><input type="text" id="retirada-nome" placeholder="Digite o nome completo" required></div>
+                <div class="form-campo"><label for="retirada-cpf">CPF de quem está pagando*</label><input type="tel" id="retirada-cpf" placeholder="Necessário para o pagamento Pix" required></div>
+                <div class="form-campo"><label for="retirada-telefone">Telefone / WhatsApp (opcional)</label><input type="tel" id="retirada-telefone" placeholder="Para avisarmos quando estiver pronto"></div>
+            </form>
+        </div>
+        <div id="tela-pagamento" class="tela-carrinho">
+            <div id="payment-selection-container"></div>
+            <div id="debit-card-payment-container"></div>
+            <div id="pix-display-container" style="display: none;"></div>
+        </div>
+        <div id="tela-sucesso" class="tela-carrinho tela-sucesso">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <h3>Pedido Enviado!</h3>
+            <p>Obrigado pela preferência!</p>
+            <p>Acompanhe o status na aba "Pedidos".</p>
+        </div>
+    </div>
+
+    <footer class="carrinho-rodape">
+        <div id="guest-points-prompt" style="display: none;"></div>
+        <div class="resumo-collapsible" id="resumo-collapsible-container" style="display: none;">
+            <div class="resumo-breakdown" id="resumo-breakdown-content"></div>
+            <div class="resumo-footer-total" id="resumo-footer-toggle">
+                <span class="toggle-details">
+                    <ion-icon name="chevron-up-outline" class="chevron"></ion-icon>
+                    Ver Detalhes
+                </span>
+                <span class="total-price" id="resumo-footer-total-valor">R$ 0,00</span>
+            </div>
+        </div>
+        <button class="botao-continuar-carrinho" id="btn-continuar-carrinho">
+            <span>Continuar</span>
+        </button>
+    </footer>
+</div>
+<div id="change-confirm-modal" class="modal-sobreposicao">
+        <div class="modal-content" style="max-width: 450px; text-align: center;">
+            <ion-icon name="cash-outline" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 15px;"></ion-icon>
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Confirmar Pagamento</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 25px;">Você selecionou pagamento em dinheiro **sem necessidade de troco**. Está correto?</p>
+            <div class="form-actions" style="justify-content: center; gap: 15px;">
+                <button id="btn-needs-change" class="btn btn-secondary">Vou precisar de troco</button>
+                <button id="btn-confirm-no-change" class="btn btn-primary">Sim, sem troco</button>
+            </div>
+        </div>
+    </div>
+ <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+
+    <a href="promocoes.html" class="bottom-nav-item">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span class="bottom-nav-text">Promoções</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>
+
+    <footer class="rodape-moderno">
+    </footer>
+    <script src="static/js/shared-ui.js?v=1.0.0"></script>
+
+    <script src="static/js/script.js?v=1.0.0"></script>
+
+    <footer class="rodape-moderno">
+    <div class="rodape-container">
+
+        <div class="rodape-coluna">
+            <h4>Zap Esfirras</h4>
+            <p class="rodape-descricao">A melhor esfirra da região, feita com ingredientes frescos e muito carinho. Peça agora e se surpreenda!</p>
+            <div class="redes-sociais-loja">
+                <a href="https://www.facebook.com/zapp.esfirras" target="_blank" title="Facebook"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="https://www.instagram.com/zapesfirras/" target="_blank" title="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+                <a href="https://wa.me/5519991432597" target="_blank" title="WhatsApp"><ion-icon name="logo-whatsapp"></ion-icon></a>
+            </div>
+        </div>
+
+        <div class="rodape-coluna">
+            <h4>Fale com o Desenvolvedor</h4>
+            <form class="formulario-contato" id="dev-contact-form">
+                <div class="input-grupo">
+                    <input type="text" placeholder="Seu nome" required>
+                </div>
+                <div class="input-grupo">
+                    <input type="email" placeholder="Seu e-mail" required>
+                </div>
+                <div class="input-grupo">
+                    <textarea placeholder="Sua mensagem" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-enviar-contato">
+                    <ion-icon name="send-outline"></ion-icon> Enviar Mensagem
+                </button>
+            </form>
+        </div>
+
+        <div class="rodape-coluna desenvolvedor-rodape">
+            <h4>Desenvolvido por</h4>
+            <p class="nome-dev">Gabriel Martins de Souza</p>
+            <div class="redes-sociais-dev">
+                <a href="https://github.com/bielsxx7" target="_blank" title="GitHub"><ion-icon name="logo-github"></ion-icon></a>
+                <a href="https://www.instagram.com/souza4mz_/" target="_blank" title="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+                <a href="https://wa.me/5519971073157?text=Ol%C3%A1!%20Estou%20interessado%20em%20seu%20servi%C3%A7o!" target="_blank" title="WhatsApp"><ion-icon name="logo-whatsapp"></ion-icon></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="rodape-creditos">
+        &copy; 2025 Zap Esfirras. Todos os direitos reservados.
+    </div>
+</footer>
+<script>
+    document.getElementById('dev-contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const name = form.querySelector('input[type="text"]').value;
+        const email = form.querySelector('input[type="email"]').value;
+        const message = form.querySelector('textarea').value;
+        const button = form.querySelector('button');
+
+        button.disabled = true;
+        button.innerHTML = 'Enviando...';
+
+        try {
+            const response = await fetch('/api/contact-developer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message);
+            }
+            
+            
+            if (typeof showNotification === 'function') {
+                showNotification(result.message, 'success');
+            } else {
+                alert(result.message); 
+            }
+            form.reset();
+
+        } catch (error) {
+            if (typeof showNotification === 'function') {
+                showNotification(error.message, 'error');
+            } else {
+                alert(error.message);
+            }
+        } finally {
+            button.disabled = false;
+            button.innerHTML = '<ion-icon name="send-outline"></ion-icon> Enviar Mensagem';
+        }
+    });
+</script>
+
+</body>
+</html>

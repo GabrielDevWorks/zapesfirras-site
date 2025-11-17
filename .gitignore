@@ -1,0 +1,10 @@
+# Ignorar pastas de dependências
+/app/node_modules
+node_modules
+
+# Ignorar o arquivo com senhas e segredos
+.env
+/app/.env
+
+# Ignorar logs
+npm-debug.log

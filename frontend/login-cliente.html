@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Entrar na sua Conta - Zap Esfirras</title>
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="stylesheet" href="static/css/auth-cliente.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        <div class="auth-form-card">
+            <a href="index.html">
+                <img src="assets/zapesfiiras.png" alt="Zap Esfirras Logo" class="auth-logo">
+            </a>
+            <h2>Acesse sua Conta</h2>
+            <p class="auth-subtitle">Que bom te ver de novo!</p>
+            
+            <form id="login-form">
+
+                <div class="form-grupo">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">Seu e-mail</label>
+                </div>
+
+                <div class="form-grupo">
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder=" " required>
+                        <label for="password">Sua senha</label>
+                        <ion-icon name="eye-outline" class="password-toggle-icon"></ion-icon>
+                    </div>
+                </div>
+
+                <p id="error-message" class="error-text"></p>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+
+                <div class="form-links">
+                    <a href="esqueci-senha.html">Esqueci minha senha</a>
+                </div>
+
+            </form>
+
+            <p class="auth-switch-link">
+                Não tem uma conta? <a href="cadastro-cliente.html">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Termos de Uso</h3>
+                <button class="modal-close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <h4>1. Aceitação dos Termos</h4>
+                <p>Ao utilizar nosso serviço, você concorda em cumprir estes termos. Se você não concorda, não use o serviço.</p>
+                <h4>2. Pedidos e Pagamentos</h4>
+                <p>Todos os pedidos estão sujeitos à disponibilidade. Os pagamentos devem ser feitos no momento da entrega ou conforme as opções fornecidas...</p>
+            </div>
+        </div>
+    </div>
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Política de Privacidade</h3>
+                <button class="modal-close-btn">&times;</button>
+            </header>
+            <div class="modal-body">
+                <h4>1. Coleta de Informações</h4>
+                <p>Coletamos informações que você nos fornece diretamente, como nome, telefone e endereço, para processar seu pedido.</p>
+                <h4>2. Uso das Informações</h4>
+                <p>Suas informações são usadas exclusivamente para fins de entrega e comunicação sobre seu pedido. Não compartilhamos seus dados com terceiros...</p>
+            </div>
+        </div>
+    </div>
+
+ <nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <span class="bottom-nav-text">Início</span>
+    </a>
+
+    <a href="promocoes.html" class="bottom-nav-item">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span class="bottom-nav-text">Promoções</span>
+    </a>
+    <a href="pedidos.html" class="bottom-nav-item">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <span class="bottom-nav-text">Pedidos</span>
+    </a>
+    <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+        <ion-icon name="person-outline"></ion-icon>
+        <span class="bottom-nav-text">Perfil</span>
+    </a>
+    <button class="bottom-nav-item" id="botao-carrinho-mobile">
+        <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="bottom-nav-text">Sacola</span>
+    </button>
+</nav>
+    <script src="static/js/auth-cliente.js"></script> 
+    <script src="static/js/shared-ui.js"></script>
+</body>
+</html>

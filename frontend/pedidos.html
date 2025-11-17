@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meus Pedidos - Zap Esfirras</title>
+    
+    <link rel="stylesheet" href="static/css/style.css?v=1.0.2">
+    <link rel="icon" type="image/png" href="assets/zapesfiiras.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body class="pagina-pedidos">
+    <div id="tela-carregamento">
+        <img src="assets/zapesfiiras.png" alt="Logo Zap Esfirras" class="logo-pulso">
+    </div>
+
+    <div id="conteudo-principal" style="display: none;">
+        
+    <header>
+        <div class="barra-superior-info apenas-desktop">
+            <span id="greeting">Boa noite!</span> &#8226; <span id="current-date">Quarta-feira, 10 de Setembro</span>
+        </div>
+        <div class="barra-navegacao">
+            <div class="marca-navegacao">
+                <a href="index.html">
+                    <img src="assets/zapesfiiras.png" alt="Zap Esfirras">
+                </a>
+            </div>
+            <nav class="menu-navegacao apenas-desktop">
+                <ul class="nav-links">
+                    <li><a href="index.html">Opções</a></li>
+                    <li><a href="pedidos.html">Pedidos</a></li>
+                    <li><a href="promocoes.html">Promoções</a></li>
+                </ul>
+            </nav>
+            <div class="acoes-navegacao apenas-desktop">
+                <div class="caixa-pesquisa">
+                    <input type="text" class="texto-pesquisa" placeholder="Buscar...">
+                    <a href="#" class="botao-pesquisa"><ion-icon name="search-outline"></ion-icon></a>
+                </div>
+                <button class="botao-carrinho-desktop" id="botao-carrinho-desktop">
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <span class="contador-carrinho" id="contador-carrinho-desktop">0</span>
+                </button>
+                <a href="login-cliente.html" class="botao-conta" id="botao-conta-desktop">CONTA</a>
+                <div class="info-usuario-logado" id="info-usuario-desktop" style="display: none;">
+                    <a href="/perfil.html" class="link-perfil-desktop">
+                        <span id="nome-usuario-desktop"></span>
+                    </a>
+                    <button id="botao-logout-desktop" class="botao-logout" title="Sair">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+        <main class="container-principal">
+            <h1 class="titulo-pagina-pedidos">Acompanhe seus Pedidos</h1>
+            
+            <div class="container-lista-pedidos" id="lista-pedidos">
+                </div>
+        </main>
+    </div>
+    
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <ion-icon name="storefront-outline"></ion-icon>
+            <span class="bottom-nav-text">Início</span>
+        </a>
+        <a href="promocoes.html" class="bottom-nav-item">
+            <ion-icon name="pricetag-outline"></ion-icon>
+            <span class="bottom-nav-text">Promoções</span>
+        </a>
+        <a href="pedidos.html" class="bottom-nav-item active"> <ion-icon name="receipt-outline"></ion-icon>
+            <span class="bottom-nav-text">Pedidos</span>
+        </a>
+        <a href="login-cliente.html" class="bottom-nav-item" id="botao-perfil-mobile">
+            <ion-icon name="person-outline"></ion-icon>
+            <span class="bottom-nav-text">Perfil</span>
+        </a>
+        <button class="bottom-nav-item" id="botao-carrinho-mobile">
+            <span class="contador-carrinho" id="contador-carrinho-mobile">0</span>
+            <ion-icon name="cart-outline"></ion-icon>
+            <span class="bottom-nav-text">Sacola</span>
+        </button>
+    </nav>
+
+    <div class="modal-overlay" id="order-details-modal">
+        <div class="modal-content">
+            <h2 id="modal-order-title">Detalhes do Pedido</h2>
+            <div id="modal-order-content"></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="close-order-modal-btn">Fechar</button>
+            </div>
+            <button class="close-modal-button" id="close-order-modal-icon-btn"><ion-icon name="close-outline"></ion-icon></button>
+        </div>
+    </div>
+
+    <script src="static/js/shared-ui.js"></script>
+    <script src="static/js/pedidos.js"></script>
+
+</body>
+</html>
